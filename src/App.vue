@@ -2,19 +2,18 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
  
-    <scratch></scratch>
+    <copy-paste></copy-paste>
   </div>
 </template>
 
 <script>
 
-import Scratch from './components/scratch.vue'
-
+import CopyPaste from './components/CopyPaste.vue'
 
 export default {
   name: 'App',
   components: {
-    Scratch,
+    CopyPaste,
   }
 }
 </script>
