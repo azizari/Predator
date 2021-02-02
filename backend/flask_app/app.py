@@ -1,19 +1,23 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
+import json
+
 
 app = Flask(__name__)
 CORS(app)
 
+sick_model = "xy"
 
 
 
-
-@app.route("/copypaste", method=['POST'])
+@app.route("/copypaste", methods=['GET', 'POST'])
 def template_test():
     
-    
-    
-    return 'test str'
+    p = request.data
+    pj = json.loads(p)['postData']*900
+
+
+    return pj#'test str'
 
 
 
