@@ -38,6 +38,7 @@ export default {
             const nRows = e.split(/\r\n|\r|\n/).length;
             
             // !!! add also minimum limit here
+            // prevent empty requests
             if ((inpLength < 25000) && (nRows < 500)){
                 this.copyPasteData = e
                 return e;      

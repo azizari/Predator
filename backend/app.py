@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 import json
-
+from ml import funcs
 
 app = Flask(__name__)
 CORS(app)
@@ -14,10 +14,10 @@ sick_model = "xy"
 def template_test():
     
     p = request.data
-    pj = json.loads(p)['postData']*900
+    pj = json.loads(p)['postData']
+    fj = json.dumps(funcs(pj))
 
-
-    return pj#'test str'
+    return fj#'test str'
 
 
 
