@@ -24,7 +24,9 @@ export default {
         async postCopyPaste() {
             const response = axios.post(
                 'http://localhost:5000/copypaste',
-                {postData: this.copyPasteData}
+                {
+                    postData: this.copyPasteData,
+                }
             )
             const resp = await response
             console.log(resp)
@@ -53,7 +55,7 @@ export default {
     data(){
         return{
             copyPasteData: "",
-            respo: ""
+            respo: "",
         }
     }
 }
