@@ -1,8 +1,11 @@
 import json
-from dummy_data import myl
 import numpy as np
 import pandas as pd
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import Ridge
 
+from dummy_data import myl
 
 #class
 #def __init__():
@@ -43,27 +46,32 @@ xy_arr = np.concatenate(
 )[n_lags:,:]
 
 
-# split X/y and differentiate y values
-X = xy_arr[:, :-1]
-# store final value
-y_init = xy_arr[-1, -1]
-# differentiate y values
-y = np.diff(xy_arr[:, -1:], axis=0)
+# initial X row
+X_sample = xy_arr[-1:, 1:]
+# inital convertion row for y
+y_pred_init = xy_arr[-1:, -1:]
+
+# train sets
+X_train = xy_arr[1:, :-1]
+y_train = np.diff(xy_arr[:, -1:], axis=0)
 
 
 
-# do preiction
+# train
+model = RandomForestRegressor()
+model.fit(X_train, y_train)
 
 
+# predict
+# instantiate empty prediction array
+preds = np.array([])
+for i in range(n_steps):
+    # predict sample
+    y_pred = model.predict(X_sample)
+    # roll and add final prediction
+    X_sample = np.roll(X_sample, -1)
+    X_sample[:, -1] = y_pred + X_sample[:, -2]
+    # update prediction array
+    preds = np.append(preds, X_sample[:, -1])
 
-# take cumulative sum
-y = np.cumsum(np.vstack((y_init, y)))[1:]
-
-
-
-
-
-
-
-
-
+    print(preds)

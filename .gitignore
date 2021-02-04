@@ -4,7 +4,6 @@ node_modules
 venv
 
 
-
 # local env files
 .env.local
 .env.*.local
@@ -26,4 +25,3 @@ pnpm-debug.log*
 *.sw?
 scratch*
 __pycache__
-dummy_data.py
