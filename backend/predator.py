@@ -114,7 +114,7 @@ class Predator:
 
         # predict
         # instantiate empty prediction array
-        preds = np.array([])
+        pred_arr = np.array([])
         
         for i in range(n_steps):
             
@@ -126,14 +126,28 @@ class Predator:
             X_sample[:, -1] = y_pred + X_sample[:, -2]
             
             # update prediction array
-            preds = np.append(preds, X_sample[:, -1])
+            pred_arr = np.append(pred_arr, X_sample[:, -1])
         
-        return preds
+        # add dates
+        pred_days = pd.date_range(
+            start=self.df['ts'].values[-1], periods=len(pred_arr) + 1, freq=self.freq
+            )[1:]
+
+        # make data frame of prediction time stamps and values
+        df_preds = pd.DataFrame({'ts': pred_days, 'value': pred_arr, 'value_type': 'prediction'})
+
+        # add value type 'historical' to historical data frame 
+        self.df['value_type'] = 'historical'
+
+        # concatenate all historical and prediction data
+        final_df = pd.concat((self.df, df_preds), ignore_index=True, axis=0)
+
+        return final_df
 
 # test
 predator = Predator()
 predator.crunch(myl, n_lags=10, n_steps=10)
 
-prediction = pd.DataFrame(predator.vomit(), columns=predator.df.columns)
+prediction = predator.vomit()
 
 print(prediction)
