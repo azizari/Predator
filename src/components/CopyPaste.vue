@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="">
 
       <b-form-textarea
         id="textarea-small"
@@ -10,7 +10,10 @@
       <p>
       </p>
         <h5 @click="postCopyPaste">buttin</h5>
-        {{respo}}
+        {{modelRes}}
+        {{nRows}}
+        {{nSteps}}
+    
     </div>
 </template>
 
@@ -28,10 +31,10 @@ export default {
                     postData: this.copyPasteData,
                 }
             )
-            const resp = await response
-            console.log(resp)
-            this.respo = resp.data
-            return resp
+            const res = await response;
+            console.log(res);
+            this.modelRes = res.data;
+            return res
         },
         
         // perform input check
@@ -42,11 +45,23 @@ export default {
             // !!! add also minimum limit here
             // prevent empty requests
             if ((inpLength < 25000) && (nRows < 500)){
-                this.copyPasteData = e
+                //set input data
+                this.copyPasteData = e;
+                //set number of rows from input
+                this.nRows = nRows;
+                //set max steps allowed
+                this.nSteps = Math.min(30, parseInt(nRows * .15));
+                
                 return e;      
             }
             else{
-                this.copyPasteData = ""
+                // input data
+                this.copyPasteData = "";
+                // number of rows from input
+                this.nRows = "";
+                // max steps allowed
+                this.nSteps = "";
+                
                 return 'Limit exceeded, try with less data.'
             }
         }
@@ -54,8 +69,15 @@ export default {
     },
     data(){
         return{
+            // copy paste data
             copyPasteData: "",
-            respo: "",
+            // number of input rows
+            nRows: "",
+            // max steps on basis of input data
+            nSteps: "",
+            // historical and predicted data
+            modelRes: "",
+
         }
     }
 }
