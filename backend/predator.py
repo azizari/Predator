@@ -22,7 +22,7 @@ class Predator:
         self.n_lags = n_lags       
         self.n_steps = n_steps
         
-        # lambda function to convert incomming data to nested lists
+        # lambda function to convert incomming data into nested lists
         #string_tolist = lambda x: [i.split('\t') for i in x.split('\n')]
         #df = string_tolist(df)
         
@@ -45,7 +45,7 @@ class Predator:
 
         """ private method infers frequency of time seris """
         
-        # self vars
+        # instance variables
         df = self.df
 
         # infer frequency in seconds
@@ -60,7 +60,7 @@ class Predator:
 
         """ private method interpolates data if gaps exits"""
         
-        # self vars
+        # instance variables
         freq = self.freq
         df = self.df
 
@@ -79,6 +79,7 @@ class Predator:
 
         """ private method reshapes data and preps it for time series forecasting """
 
+        # instance variables
         n_lags = self.n_lags
         n_steps = self.n_steps
         df = self.df
@@ -96,7 +97,10 @@ class Predator:
         X_sample = xy_arr[-1:, 1:]
 
         # train sets
+        # X train samples for model training
         X_train = xy_arr[1:, :-1]
+        
+        # differentiated y train samples for model training
         y_train = np.diff(xy_arr[:, -1:], axis=0)
 
         return (X_train, y_train, X_sample)
@@ -105,23 +109,28 @@ class Predator:
 
         """ method to train and predict """
 
+        # instance variables
         X_train, y_train, X_sample = self.__xy_tup 
         n_steps = self.n_steps
 
-        # train
+        # train model
+        # instaniate model
         model = Ridge()
+        
+        # fit model to data
         model.fit(X_train, y_train)
 
-        # predict
+        # predict using fitted model
         # instantiate empty prediction array
         pred_arr = np.array([])
         
+        # predict n_steps ahead
         for i in range(n_steps):
             
             # predict sample
             y_pred = model.predict(X_sample)
             
-            # roll and add final prediction
+            # roll and replace final prediction
             X_sample = np.roll(X_sample, -1)
             X_sample[:, -1] = y_pred + X_sample[:, -2]
             
@@ -131,10 +140,12 @@ class Predator:
         # add dates
         pred_days = pd.date_range(
             start=self.df['ts'].values[-1], periods=len(pred_arr) + 1, freq=self.freq
-            )[1:]
+        )[1:]
 
         # make data frame of prediction time stamps and values
-        df_preds = pd.DataFrame({'ts': pred_days, 'value': pred_arr, 'value_type': 'prediction'})
+        df_preds = pd.DataFrame(
+            {'ts': pred_days, 'value': pred_arr, 'value_type': 'prediction'}
+        )
 
         # add value type 'historical' to historical data frame 
         self.df['value_type'] = 'historical'
@@ -148,6 +159,6 @@ class Predator:
 predator = Predator()
 predator.crunch(myl, n_lags=10, n_steps=10)
 
-prediction = predator.vomit()
+vomit = predator.vomit()
 
-print(prediction)
+print(vomit)
