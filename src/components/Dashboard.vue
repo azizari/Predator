@@ -1,20 +1,27 @@
 <template>
-    <div class="">
-        Number of rows: {{nRows}}
-        <b-form-textarea
-            id="textarea-small"
-            size="md"
-            placeholder="Max 500 rows and 25.000 characters (please don't include table headers)"
-            :formatter="formatText"
-        ></b-form-textarea>
-        <div>
-            <label for="steps">Number of Steps</label>
-            <b-form-spinbutton id="steps" v-model="nSteps" min="5" :max="nMax"></b-form-spinbutton>
+    <div class="dashboard">
+        <div class="parameters">
+            Number of rows: {{nRows}}
+            <b-form-textarea
+                id="textarea-small"
+                size="md"
+                placeholder="Max 500 rows and 25.000 characters (please don't include table headers)"
+                :formatter="formatText"
+            ></b-form-textarea>
+            <div>
+                <label for="steps">Number of Steps</label>
+                <b-form-spinbutton id="steps" v-model="nSteps" min="5" :max="nMax"></b-form-spinbutton>
+            </div>
+
+            <b-button :disabled="nRows < 50" size="md" @click="postCopyPaste">Make Forecast</b-button>
+        </div>
+        
+        <div class="chart">
+            Chart
         </div>
 
-        <b-button :disabled="nRows < 50" size="md" @click="postCopyPaste">Make Forecast</b-button>
-
     </div>
+
 </template>
 
 <script>

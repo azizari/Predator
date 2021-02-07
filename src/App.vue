@@ -1,7 +1,7 @@
 <template>
   <div id="app">
    
-   <copy-paste></copy-paste>
+   <dashboard></dashboard>
 
 
 
@@ -10,12 +10,12 @@
 
 <script>
 
-import CopyPaste from './components/CopyPaste.vue'
+import Dashboard from './components/Dashboard.vue'
 
 export default {
   name: 'App',
   components: {
-    CopyPaste,
+    Dashboard,
   }
 }
 </script>
