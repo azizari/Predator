@@ -56,7 +56,7 @@ export default {
             const res = await response;
             console.log(res);
             this.modelRes = res.data;
-            return res
+            return res;
         },
         
         // perform input check
