@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import Ridge
-from dummy_data import myl
+#from dummy_data import myl
 
 
 class Predator:

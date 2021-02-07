@@ -17,17 +17,21 @@
         </div>
         
         <div class="chart">
-            Chart
+            <chart :chartData="this.modelRes" v-if="this.modelRes"></chart>
+            
         </div>
-
     </div>
 
 </template>
 
 <script>
+import Chart from './Chart.vue';
 const axios = require('axios')
 
 export default {
+     components: {
+      Chart
+      },
     methods:{
         
         // axios
@@ -65,7 +69,7 @@ export default {
             }
             else{
                 // input data
-                this.copyPasteData = "";
+                this.copyPasteData = false;
                 // number of rows from input
                 this.nRows = 0;
                 // max steps allowed
@@ -89,7 +93,7 @@ export default {
 
             
             // historical and predicted data
-            modelRes: "",
+            modelRes: [],
 
         }
     }
