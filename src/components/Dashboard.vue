@@ -1,5 +1,9 @@
 <template>
+    
+    <!--dashboard cintainer -->
     <div class="dashboard">
+        
+    <!-- chart side bar-->
         <div class="parameters">
             Number of rows: {{nRows}}
             <b-form-textarea
@@ -15,9 +19,15 @@
 
             <b-button :disabled="nRows < 50" size="md" @click="postCopyPaste">Make Forecast</b-button>
         </div>
-        
+
+    <!-- chart nav bar -->
+
+
+    <!-- chart -->
         <div class="chart">
             <chart :chartData="this.modelRes" v-if="this.modelRes"></chart>
+
+    <!-- chart stats -->
             
         </div>
     </div>
@@ -25,8 +35,8 @@
 </template>
 
 <script>
-import Chart from './Chart.vue';
-const axios = require('axios')
+import Chart from './DashboardComponents/Chart.vue';
+const axios = require('axios');
 
 export default {
      components: {
@@ -40,6 +50,7 @@ export default {
                 'http://localhost:5000/copypaste',
                 {
                     postData: this.copyPasteData,
+                    nSteps: this.nSteps,
                 }
             )
             const res = await response;
@@ -100,7 +111,3 @@ export default {
 }
 
 </script>
-
-<style>
-
-</style>
