@@ -3,7 +3,6 @@ node_modules
 /dist
 venv
 
-
 # local env files
 .env.local
 .env.*.local
@@ -23,5 +22,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-scratch*
-__pycache__
+
+dummy_data.py
+package.json

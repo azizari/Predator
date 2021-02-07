@@ -23,8 +23,8 @@ class Predator:
         self.n_steps = n_steps
         
         # lambda function to convert incomming data into nested lists
-        #string_tolist = lambda x: [i.split('\t') for i in x.split('\n')]
-        #df = string_tolist(df)
+        string_tolist = lambda x: [i.split('\t') for i in x.split('\n')]
+        df = string_tolist(df)
         
         # make initial pandas data frame
         self.df = pd.DataFrame(df, columns = ['ts', 'value']).astype(
@@ -153,12 +153,12 @@ class Predator:
         # concatenate all historical and prediction data
         final_df = pd.concat((self.df, df_preds), ignore_index=True, axis=0)
 
-        return final_df
+        return final_df.to_json(orient='values')
 
-# test
-predator = Predator()
-predator.crunch(myl, n_lags=10, n_steps=10)
-
-vomit = predator.vomit()
-
-print(vomit)
+### test
+#predator = Predator()
+#predator.crunch(myl, n_lags=10, n_steps=10)
+##
+#vomit = predator.vomit().to_dict()
+##
+#print(vomit)

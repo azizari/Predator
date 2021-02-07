@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
- 
-    <copy-paste></copy-paste>
+   
+   <copy-paste></copy-paste>
+
+
+
   </div>
 </template>
 
@@ -26,5 +28,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  padding: 100px;
 }
 </style>
