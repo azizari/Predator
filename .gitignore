@@ -24,3 +24,4 @@ pnpm-debug.log*
 *.sw?
 dummy_data.py
 package.json
+__pycache__
