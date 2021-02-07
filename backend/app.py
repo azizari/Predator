@@ -2,15 +2,16 @@ from flask import Flask, request
 from flask_cors import CORS
 import json
 from predator import Predator
-#from ml import funcs
 
-# test
+
+# instantiate predator
 predator = Predator()
 
+# instantiate flask app
 app = Flask(__name__)
 CORS(app)
 
-
+# rout for 
 @app.route("/copypaste", methods=['GET', 'POST'])
 def template_test():
     
@@ -21,9 +22,6 @@ def template_test():
     #fj = json.dumps(funcs(pj))
 
     return vomit
-
-
-
 
 
 
